@@ -1,0 +1,288 @@
+@media screen and (max-width: 1700px) { 
+    body{
+        zoom:75%
+    }
+}
+.button:focus{
+    outline:none;
+}
+
+body{
+    padding-top: 100px;
+}
+#boks{
+    margin-bottom: 10px;
+    margin-top:20px;
+    height:220px;
+}
+
+#overskrift{
+    font-family:serif;
+    text-align: center;
+    margin-bottom: 0px;
+    margin-top:0px;
+    text-transform: uppercase;
+    text-decoration: underline;
+    font-weight: 450;
+    font-size:30px;
+}
+input[type="checkbox"]{
+    border-color:rgba(245, 245, 245);
+}
+
+input[type="checkbox"]:checked{
+    border-color:blue;
+}
+
+#topheader{
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:100;
+    background-color: white;
+    border-bottom:3px solid lightgray;
+    padding-bottom:10px;
+}
+.firkanter{
+    position:static;
+    display:flex;
+    flex-wrap:wrap;
+    margin-top:20px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0px;
+}
+
+#firkantstream{
+    margin-bottom: 90px;
+}
+
+.firkant,.firkantst{
+    background-repeat: no-repeat;
+    width: 150px;
+    height:150px;
+    margin:20px;
+    margin-bottom: 0px;
+    margin-top:0px;
+    border-radius: 5%;
+    border-width: 5px;
+    box-shadow: 0px 0px 0px 0.5px gray;
+}
+.circlestream {
+    position: relative;
+    bottom:100px;
+    left:-40px;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #999;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: coral;
+    font-weight: bold;
+    text-align:center;
+    line-height: 35px;
+    font-size:12px;
+    margin:0px;
+  }
+
+.circle {
+    position: relative;
+    bottom:200px;
+    left:150px;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #999;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: coral;
+    font-weight: bold;
+    text-align:center;
+    line-height: 35px;
+    font-size:12px;
+    margin:0px;
+  }
+
+#pointknap,#prisknap{
+    width:8%;
+}
+
+.navne{
+    text-align:center;
+}
+#drop{
+    margin-left:20px;
+}
+
+.Norlyspris{
+    margin-right:11px;
+    margin-top:5px;
+    font-weight: bold;
+    float:left;
+    text-align:center;
+    font-size:14px;
+    height:16px;
+    width: 16px;
+}
+
+.hoverable{
+    margin-top:8px;
+    font-weight: bold;
+    margin-right:5px;
+    float:left;
+    text-align:center;
+    font-size:12px;
+    height:16px;
+    width: 16px;
+    border-radius: 30%;
+    background:lightgray;
+}
+
+.hidden{
+    visibility: hidden;
+}
+.hidden.innertext{
+    opacity:1;
+}
+.hoverable:hover+.hidden{
+    display:block;
+}
+
+.bigtext{
+    font-size: 24px;
+}
+.checkboxes input{
+    margin: 10px 10px 0px 0px;
+}
+p{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: 500;
+}
+
+#Norlys{
+    position:absolute;
+    bottom:auto;
+    width:5%;
+    left:44.5%;
+    background-color:coral;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+.navnestream{
+    text-align:center;
+    width:190px;
+    line-break:strict;
+    margin:0px;
+}
+
+#Stofa{
+    position:absolute;
+    bottom:auto;
+    width: 5%;
+    left:50%;
+    background-color:coral;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+#ryd{
+    position:absolute;
+    right:2%;
+    width:6%
+}
+
+#pointcheck{
+    position:absolute;
+    right:150px;
+    margin-top:10px;
+    font-size:18px;
+    font-family: sans-serif;
+}
+#res{
+    border-top:3px solid lightgray;
+    position:fixed;
+    bottom:0;
+    background-color: white;
+    text-align: center;
+    padding-bottom: 10px;
+    width:100%;
+}
+
+#btn,#btn1{
+    width:8%;
+    height: 45px;
+    background-color: rgb(212,238,250);
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    vertical-align: top;
+    margin-left: 2%;
+    margin-right: 20px;
+    margin-top: 10px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+#back{
+    position: relative;
+    bottom: 0px;
+    text-align: center;
+}
+button{
+    margin-top:5px;
+    border-radius: 5px;
+    font-family: sans-serif;
+}
+#vælg{
+    text-align:left;
+    bottom:auto;
+    font-size: 20px;
+}
+#KellerS{
+    text-align: center;
+    text-decoration: underline;
+    font-size:25px;
+}
+
+#DRkanaler{
+    position:absolute;
+    margin-left: 20px;
+    font-size:18px;
+    left:0;
+    width:auto;
+}
+
+#tekst1,#tekst2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:relative;
+    padding-top: 20px;
+}
+#tekst2{
+    padding-top:0px;
+}
+
+.align-left{
+    text-align: left;
+}
+#streamingpris{
+    display: grid;
+    grid-template-columns: 50% 50%;	
+    justify-content:space-evenly;
+}
+
+hr{
+    margin:8px;
+}
+
+.cheap{
+    color:green;
+    text-decoration: underline;
+}
+
+.dropdown-item{
+    font-size:18px;
+}
+
+.swall_wide{
+    width: auto !important;
+    max-width: 850px !important;
+}
