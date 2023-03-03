@@ -2,6 +2,9 @@
     #main{
         zoom:75%
     }
+    #swal2-html-container{
+        zoom:75%;
+    }
 }
 .button:focus{
     outline:none;
