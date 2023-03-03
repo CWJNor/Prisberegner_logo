@@ -297,9 +297,13 @@ DisKnap.addEventListener("click",function(){
 let ryd = document.querySelector("#ryd");
 ryd.addEventListener("click",function(){
     let kan=document.getElementsByClassName("firkant");
+    let kanstream=document.getElementsByClassName("firkantst");
         for (let k of kan){
                 k.checked=false;
             }
+        for (let kst of kanstream){
+            kst.checked=false;
+        }
 })
 
 //Tilføj streaming
