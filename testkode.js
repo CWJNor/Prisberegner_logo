@@ -383,12 +383,12 @@ for (let i=0;i<stream.length;i++){
 
     
     tekst.innerHTML=streampretty[i];
-    
     tekst.classList.add("navnestream");
+
     kanalogtekst.appendChild(kanalfirkant);
     kanalogtekst.appendChild(tekst);
+    kanalogtekst.appendChild(pointtal);
     firkanterstream.appendChild(kanalogtekst);
-    firkanterstream.appendChild(pointtal);
 }
 
 //UDREGNER PRISER

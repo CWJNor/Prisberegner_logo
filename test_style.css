@@ -10,7 +10,12 @@
 #tekst1{
     padding-top: 130px;
 }
+#tekstboks{
+    height:190px;
+}
+
 #boks{
+    display:inline-block;
     margin-bottom: 10px;
     margin-top:20px;
     height:220px;
@@ -59,8 +64,8 @@ input[type="checkbox"]:checked{
 
 .firkant,.firkantst{
     background-repeat: no-repeat;
-    width: 150px;
-    height:150px;
+    width: 120px;
+    height:120px;
     margin:20px;
     margin-bottom: 0px;
     margin-top:0px;
@@ -70,8 +75,8 @@ input[type="checkbox"]:checked{
 }
 .circlestream {
     position: relative;
-    bottom:100px;
-    left:-40px;
+    bottom:165px;
+    left:75%;
     width: 35px;
     height: 35px;
     border: 1px solid #999;
@@ -87,8 +92,8 @@ input[type="checkbox"]:checked{
 
 .circle {
     position: relative;
-    bottom:200px;
-    left:150px;
+    bottom:165px;
+    left:75%;
     width: 35px;
     height: 35px;
     border: 1px solid #999;
@@ -108,6 +113,10 @@ input[type="checkbox"]:checked{
 
 .navne{
     text-align:center;
+    font-size:14px;
+    width:160px;
+    line-break:strict;
+    margin:0px;
 }
 #drop{
     margin-left:20px;
@@ -169,9 +178,10 @@ p{
 }
 .navnestream{
     text-align:center;
-    width:190px;
+    width:160px;
     line-break:strict;
     margin:0px;
+    font-size:14px;
 }
 
 #Stofa{
