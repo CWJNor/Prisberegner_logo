@@ -5,6 +5,9 @@
     #swal2-html-container{
         zoom:75%;
     }
+    .kampagne{
+        zoom:75%
+    }
 }
 .button:focus{
     outline:none;
@@ -13,8 +16,10 @@
 #tekst1{
     padding-top: 130px;
 }
-#tekstboks{
-    height:190px;
+#btndiv{
+    text-align: center;
+    display: inline-block;
+    width:70%
 }
 
 #boks{
@@ -22,6 +27,26 @@
     margin-bottom: 10px;
     margin-top:20px;
     height:220px;
+}
+
+#feedback{
+    position: absolute;
+    text-align:right;
+    float:right;
+    margin-right:10px;
+    margin-top:10px;
+}
+
+#feedbackbesked{
+    height:200px;
+    overflow-wrap:break-word;
+    line-break: auto;
+    width:400px;
+    text-align:left;
+    resize: none;
+}
+#feedbacknavn,#feedbackemne,#feedbackemail{
+    width:400px;
 }
 
 #overskrift{
@@ -51,32 +76,36 @@ input[type="checkbox"]:checked{
     border-bottom:3px solid lightgray;
     padding-bottom:10px;
 }
-.firkanter{
+.firkanter,#firkantstream{
     position:static;
     display:flex;
     flex-wrap:wrap;
-    margin-top:20px;
+    margin-top:3px;
     align-items: center;
     justify-content: center;
-    margin-bottom: 0px;
+    margin-bottom: 0px; 
+    margin-left: auto; 
+    margin-right: auto;
+    max-width: 95%; /* Added to limit the width of the flex container */
 }
 
 #firkantstream{
-    margin-bottom: 90px;
+    margin-bottom:100px;
+    justify-content: center;
 }
-
+#tekstboks{
+    position: relative;
+}
 .firkant,.firkantst{
     background-repeat: no-repeat;
-    width: 120px;
-    height:120px;
-    margin:20px;
-    margin-bottom: 0px;
-    margin-top:0px;
+    width: 90px;
+    height:90px;
+    margin:5px;
     border-radius: 5%;
     border-width: 5px;
     box-shadow: 0px 0px 0px 0.5px gray;
 }
-.circlestream {
+/*.circlestream {
     position: relative;
     bottom:165px;
     left:75%;
@@ -91,36 +120,52 @@ input[type="checkbox"]:checked{
     line-height: 35px;
     font-size:12px;
     margin:0px;
-  }
+  }*/
 
-.circle {
-    position: relative;
-    bottom:165px;
-    left:75%;
-    width: 35px;
-    height: 35px;
+.info{
+    position: absolute;
+    left:5px;
+    bottom:5px;
+    /*justify-content: center;
+    align-items: center;
+    line-height: 20px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #999;
+    border-radius: 50%;
+    background-color: lightgray;
+    font-weight: bold;
+    text-align:center;
+    font-size:10px;
+    margin:0px;*/
+    z-index: 1;
+}
+
+.circle,.circlestream {
+    /*display:inline-block;*/
+    position: absolute;
+    right:-5px;
+    top:-5px;
+    justify-content: center;
+    align-items: center;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
     border: 1px solid #999;
     border-radius: 50%;
     display: inline-block;
     background-color: coral;
     font-weight: bold;
     text-align:center;
-    line-height: 35px;
     font-size:12px;
     margin:0px;
+    z-index: 1;
   }
 
 #pointknap,#prisknap{
     width:8%;
 }
 
-.navne{
-    text-align:center;
-    font-size:14px;
-    width:160px;
-    line-break:strict;
-    margin:0px;
-}
 #drop{
     margin-left:20px;
 }
@@ -143,19 +188,35 @@ input[type="checkbox"]:checked{
     float:left;
     text-align:center;
     font-size:12px;
-    height:16px;
-    width: 16px;
-    border-radius: 30%;
+    height:20px;
+    line-height:20px;
+    width: 20px;
+    border-radius: 100%;
     background:lightgray;
 }
 
-.hidden{
-    visibility: hidden;
+
+.hiddentext{
+    display:none;
+    z-index: 2;
+    position: absolute;
+    width: 420px;
+    height:230px;
+    background: rgba(211, 211, 211, 0.97);
+    border-radius: 5%;
+    top:80px;
+    margin-left:20px;
+    padding:20px;
+    font-size:15px;
 }
-.hidden.innertext{
+
+.hidden{
+    display:none;
+}
+.hiddentext.innertext{
     opacity:1;
 }
-.hoverable:hover+.hidden{
+.info:hover+.hiddentext{
     display:block;
 }
 
@@ -218,17 +279,23 @@ p{
     padding-bottom: 10px;
     width:100%;
 }
+.kampagne{
+    width:80% !important;
+    height:100% !important;
+}
 
-#btn,#btn1{
-    width:8%;
+#btn,#btn1,#btn2{
+    display:inline;
+    width:16%;
+    text-align: center;
     height: 45px;
     background-color: rgb(212,238,250);
     font-size: 16px;
     text-transform: uppercase;
     font-weight: bold;
     vertical-align: top;
-    margin-left: 2%;
-    margin-right: 20px;
+    margin-left: 1%;
+    margin-right: 1%;
     margin-top: 10px;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
