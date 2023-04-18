@@ -890,6 +890,167 @@ let NVAfunc=function(){
       }
   }
 
+//Stofa Pakkeløsning
+let SPLfunc=function(){
+    let ikkem=[];
+    let streamlist=[];
+    let kanaler=[udbyderdict["Stofa pakkeloesning (lille=0,mellem=1,stor=2)"]];
+    let stream=[streamdict["Stofa pakkeloesning (lille=0,mellem=1,stor=2)"]];
+    kanaler.sort();
+    stream.sort();
+
+    Object.keys(kanaler[0]).forEach(navn=>{
+        if(kanaler[0][navn]!=="Løsning ikke mulig"){
+          kanaler[0][navn]=Number(kanaler[0][navn])
+        }
+      })
+      Object.keys(stream[0]).forEach(stnavn=>{
+        if(stream[0][stnavn]!=="Løsning ikke mulig"){
+          stream[0][stnavn]=Number(stream[0][stnavn])
+        }
+      })
+
+    let SPL=0;
+    let SPLstream=0;
+            for (let kanal of kanaler){
+                    for (let k of Object.keys(kanal)){
+                        if(values.includes(k)){
+                            if(kanal[k]=="Løsning ikke mulig"||SPL=="Løsning ikke mulig"){
+                                SPL="Løsning ikke mulig";
+                                if (kanal[k]=="Løsning ikke mulig"){
+                                    ikkem.push(k);}
+                            }
+                            if(SPL<kanal[k]){
+                                SPL=kanal[k];
+                            }
+                        }
+                    }
+                }
+                for (let st of stream){
+                    for (let s of Object.keys(st)){
+                        if(values.includes(s)){
+                            if(st[s]=="Løsning ikke mulig"){
+                                if(streampris[0][s]=="Løsning ikke mulig"){
+                                    SPL="Løsning ikke mulig";
+                                    ikkem.push(s);
+                                }
+                                else{
+                                    SPLstream+=streampris[0][s];
+                                    streamlist.push(s);
+                                }
+                            }
+                            if(SPL<st[s]){
+                                SPL=st[s];
+                            }
+                        }
+                    }
+                }
+
+        pakkepris=[274,529,779]
+        pakke=[" (lille pakke)"," (mellem pakke)", " (stor pakke)"]
+        if(SPL=="Løsning ikke mulig"){
+            return "Løsning ikke mulig pga.:<br>("+ikkem.join(", ")+")";
+        }
+        else{
+            if(SPLstream==0){
+                return pakkepris[SPL]+" kr." +pakke[SPL];
+            }
+            else{
+                return SPLstream+pakkepris[SPL]+" kr. (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+pakkepris[SPL]+" kr. (ekskl. "+streamlist.join(", ")+")";
+            }
+    }
+}
+
+//Stofa Vælg Selv
+let SVSfunc=function(){
+    let ikkem=[];
+    let streamlist=[];
+    let kanaler=[udbyderdict["Stofa Vaelg Selv (Point)"]];
+    let stream=[streamdict["Stofa Vaelg Selv (Point)"]];
+    kanaler.sort();
+    stream.sort();
+
+    Object.keys(kanaler[0]).forEach(navn=>{
+        if(kanaler[0][navn]!=="Løsning ikke mulig"){
+          kanaler[0][navn]=Number(kanaler[0][navn])
+        }
+      })
+      Object.keys(stream[0]).forEach(stnavn=>{
+        if(stream[0][stnavn]!=="Løsning ikke mulig"){
+          stream[0][stnavn]=Number(stream[0][stnavn])
+        }
+      })
+      
+    let SVS=0;
+    let SVSstream=0;
+    for (let kanal of kanaler){
+        for (let k of Object.keys(kanal)){
+            if(values.includes(k)){
+                if(kanal[k]=="Løsning ikke mulig"||SVS=="Løsning ikke mulig"){
+                    SVS="Løsning ikke mulig";
+                    if (kanal[k]=="Løsning ikke mulig"){
+                        ikkem.push(k);}
+                }
+                else{
+                    SVS=SVS+kanal[k];
+                }
+                }
+                }
+            }
+        for (let st of stream){
+            for (let s of Object.keys(st)){
+                if(values.includes(s)){
+                    if(st[s]=="Løsning ikke mulig"){
+                        if(streampris[0][s]=="Løsning ikke mulig"){
+                            SVS="Løsning ikke mulig";
+                            ikkem.push(s);
+                        }
+                        else{
+                            SVSstream+=streampris[0][s];
+                            streamlist.push(s);
+                        }
+                    }
+                    else{
+                        SVS=SVS+st[s];
+                    }
+                    
+                    }
+                }
+            }
+    if(isNaN(SVS)){
+        return "Løsning ikke mulig pga.:<br>("+ikkem.join(", ")+")";
+    }
+    priser=[469,559,629];
+    if(SVSstream==0){
+        if (SVS<=10){
+            return priser[0]+" kr."+" (10 point)"+" ("+SVS+" point brugt)";
+        }
+        if (SVS<=20){
+            return priser[1]+" kr."+" (20 point)"+" ("+SVS+" point brugt)";
+        }
+        if (SVS<=30){
+            return priser[2]+" kr."+" (30 point)"+" ("+SVS+" point brugt)";
+        }
+        else{
+            return "Mere end 30 point valgt: ("+SVS+" point)";
+        }
+    }
+    else{
+        if (SVS<=10){
+            return priser[0]+SVSstream+" kr."+" (10 point)"+" ("+SVS+" point brugt)"+" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+priser[0]+" kr. (ekskl. "+streamlist.join(", ")+")";
+        }
+        if (SVS<=20){
+            return priser[1]+SVSstream+" kr."+" (20 point)"+" ("+SVS+" point brugt)"+" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+priser[1]+" kr. (ekskl. "+streamlist.join(", ")+")";
+        }
+        if (SVS<=30){
+            return priser[2]+SVSstream+" kr."+" (30 point)"+" ("+SVS+" point brugt)"+" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+priser[2]+" kr. (ekskl. "+streamlist.join(", ")+")";
+        }
+        else{
+            return "Mere end 30 point valgt: ("+SVS+" point)";
+        }
+    }
+}
+
 let values = [];
 let pris=[];
 
@@ -902,11 +1063,13 @@ const btn = document.querySelector('#btn');
             let NVF=NVFfunc();
             let NVO=NVOfunc();
             let NVA=NVAfunc();
+            let SPL=SPLfunc();
+            let SVS=SVSfunc();
 
 
             let minpris=Number.MAX_VALUE;
             let expr="([0-9]+) .*"
-            Udbyderliste=[{name:"NVF",val:NVF},{name:"NVO",val:NVO},{name:"NVA",val:NVA}];
+            Udbyderliste=[{name:"SPL",val:SPL},{name:"SVS",val:SVS}];
             for (let u of Udbyderliste){
                 val=u.val.replace(expr,"");
                 val=parseInt(val);
@@ -918,23 +1081,19 @@ const btn = document.querySelector('#btn');
                 val=u.val.replace(expr,"");
                 val=parseInt(val);
                 if(val==minpris){
-                    if (u.name=="NVF"){
-                        NVF="<span class=cheap>"+NVF+"</span>";
-                    }
-                    if (u.name=="NVO"){
-                      NVO="<span class=cheap>"+NVO+"</span>";
-                  }
-                    if (u.name=="NVA"){
-                        NVA="<span class=cheap>"+NVA+"</span>";
-                    }
+                    if (u.name=="SPL"){
+                        SPL="<span class=cheap>"+SPL+"</span>";
                 }
+                if (u.name=="SVS"){
+                    SVS="<span class=cheap>"+SVS+"</span>";
             }
-            pris.push("Norlys Vælg Frit: ".bold()+NVF);
+            }
+            }
+            pris.push("Stofa pakkeløsning: ".bold()+SPL);
             pris.push("<br>");
-            pris.push("<br>"+"Norlys Vælg 8: ".bold()+NVO);
+            pris.push("<br>"+"Stofa Vælg Selv: ".bold()+SVS);
             pris.push("<br>");
-            pris.push("<br>"+"Norlys Vælg Alt: ".bold()+NVA);
-            pris.push("<br>");
+
             if (values.length==0){
                 swal.fire("Ingen kanaler valgt");
             }

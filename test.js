@@ -889,6 +889,7 @@ let NVOfunc=function(){
           }
 } 
 
+//Norlys Vælg Alt
 let NVAfunc=function(){
   let ikkem=[];
   let streamlist=[];
@@ -954,6 +955,451 @@ let NVAfunc=function(){
       }
   }
 
+//Stofa Pakkeløsning
+let SPLfunc=function(){
+    let ikkem=[];
+    let streamlist=[];
+    let kanaler=[udbyderdict["Stofa pakkeloesning (lille=0,mellem=1,stor=2)"]];
+    let stream=[streamdict["Stofa pakkeloesning (lille=0,mellem=1,stor=2)"]];
+    kanaler.sort();
+    stream.sort();
+
+    Object.keys(kanaler[0]).forEach(navn=>{
+        if(kanaler[0][navn]!=="Løsning ikke mulig"){
+          kanaler[0][navn]=Number(kanaler[0][navn])
+        }
+      })
+      Object.keys(stream[0]).forEach(stnavn=>{
+        if(stream[0][stnavn]!=="Løsning ikke mulig"){
+          stream[0][stnavn]=Number(stream[0][stnavn])
+        }
+      })
+
+    let SPL=0;
+    let SPLstream=0;
+            for (let kanal of kanaler){
+                    for (let k of Object.keys(kanal)){
+                        if(values.includes(k)){
+                            if(kanal[k]=="Løsning ikke mulig"||SPL=="Løsning ikke mulig"){
+                                SPL="Løsning ikke mulig";
+                                if (kanal[k]=="Løsning ikke mulig"){
+                                    ikkem.push(k);}
+                            }
+                            if(SPL<kanal[k]){
+                                SPL=kanal[k];
+                            }
+                        }
+                    }
+                }
+                for (let st of stream){
+                    for (let s of Object.keys(st)){
+                        if(values.includes(s)){
+                            if(st[s]=="Løsning ikke mulig"){
+                                if(streampris[0][s]=="Løsning ikke mulig"){
+                                    SPL="Løsning ikke mulig";
+                                    ikkem.push(s);
+                                }
+                                else{
+                                    SPLstream+=streampris[0][s];
+                                    streamlist.push(s);
+                                }
+                            }
+                            if(SPL<st[s]){
+                                SPL=st[s];
+                            }
+                        }
+                    }
+                }
+
+        pakkepris=[274,529,779]
+        pakke=[" (lille pakke)"," (mellem pakke)", " (stor pakke)"]
+        if(SPL=="Løsning ikke mulig"){
+            return "Løsning ikke mulig pga.:<br>("+ikkem.join(", ")+")";
+        }
+        else{
+            if(SPLstream==0){
+                return pakkepris[SPL]+" kr." +pakke[SPL];
+            }
+            else{
+                return SPLstream+pakkepris[SPL]+" kr. (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+pakkepris[SPL]+" kr. (ekskl. "+streamlist.join(", ")+")";
+            }
+    }
+}
+
+//Stofa Vælg Selv
+let SVSfunc=function(){
+    let ikkem=[];
+    let streamlist=[];
+    let kanaler=[udbyderdict["Stofa Vaelg Selv (Point)"]];
+    let stream=[streamdict["Stofa Vaelg Selv (Point)"]];
+    kanaler.sort();
+    stream.sort();
+
+    Object.keys(kanaler[0]).forEach(navn=>{
+        if(kanaler[0][navn]!=="Løsning ikke mulig"){
+          kanaler[0][navn]=Number(kanaler[0][navn])
+        }
+      })
+      Object.keys(stream[0]).forEach(stnavn=>{
+        if(stream[0][stnavn]!=="Løsning ikke mulig"){
+          stream[0][stnavn]=Number(stream[0][stnavn])
+        }
+      })
+
+    let SVS=0;
+    let SVSstream=0;
+    for (let kanal of kanaler){
+        for (let k of Object.keys(kanal)){
+            if(values.includes(k)){
+                if(kanal[k]=="Løsning ikke mulig"||SVS=="Løsning ikke mulig"){
+                    SVS="Løsning ikke mulig";
+                    if (kanal[k]=="Løsning ikke mulig"){
+                        ikkem.push(k);}
+                }
+                else{
+                    SVS=SVS+kanal[k];
+                }
+                }
+                }
+            }
+        for (let st of stream){
+            for (let s of Object.keys(st)){
+                if(values.includes(s)){
+                    if(st[s]=="Løsning ikke mulig"){
+                        if(streampris[0][s]=="Løsning ikke mulig"){
+                            SVS="Løsning ikke mulig";
+                            ikkem.push(s);
+                        }
+                        else{
+                            SVSstream+=streampris[0][s];
+                            streamlist.push(s);
+                        }
+                    }
+                    else{
+                        SVS=SVS+st[s];
+                    }
+                    
+                    }
+                }
+            }
+    if(isNaN(SVS)){
+        return "Løsning ikke mulig pga.:<br>("+ikkem.join(", ")+")";
+    }
+    priser=[469,559,629];
+    if(SVSstream==0){
+        if (SVS<=10){
+            return priser[0]+" kr."+" (10 point)"+" ("+SVS+" point brugt)";
+        }
+        if (SVS<=20){
+            return priser[1]+" kr."+" (20 point)"+" ("+SVS+" point brugt)";
+        }
+        if (SVS<=30){
+            return priser[2]+" kr."+" (30 point)"+" ("+SVS+" point brugt)";
+        }
+        else{
+            return "Mere end 30 point valgt: ("+SVS+" point)";
+        }
+    }
+    else{
+        if (SVS<=10){
+            return priser[0]+SVSstream+" kr."+" (10 point)"+" ("+SVS+" point brugt)"+" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+priser[0]+" kr. (ekskl. "+streamlist.join(", ")+")";
+        }
+        if (SVS<=20){
+            return priser[1]+SVSstream+" kr."+" (20 point)"+" ("+SVS+" point brugt)"+" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+priser[1]+" kr. (ekskl. "+streamlist.join(", ")+")";
+        }
+        if (SVS<=30){
+            return priser[2]+SVSstream+" kr."+" (30 point)"+" ("+SVS+" point brugt)"+" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+priser[2]+" kr. (ekskl. "+streamlist.join(", ")+")";
+        }
+        else{
+            return "Mere end 30 point valgt: ("+SVS+" point)";
+        }
+    }
+}
+
+//Yousee Play 10,20,30,40,+1 point =10kr. 
+let YouPfunc=function(){
+    ikkem=[];
+    let streamlist=[];
+    let kanaler=[udbyderdict["Yousee Play (Point)"]];
+    let stream=[streamdict["Yousee Play (Point)"]];
+    kanaler.sort();
+    stream.sort();
+
+    Object.keys(kanaler[0]).forEach(navn=>{
+        if(kanaler[0][navn]!=="Løsning ikke mulig"){
+          kanaler[0][navn]=Number(kanaler[0][navn])
+        }
+      })
+      Object.keys(stream[0]).forEach(stnavn=>{
+        if(stream[0][stnavn]!=="Løsning ikke mulig"){
+          stream[0][stnavn]=Number(stream[0][stnavn])
+        }
+      })
+    let YouP=0;
+    let YouPstream=0;
+        for (let kanal of kanaler){
+            for (let k of Object.keys(kanal)){
+                if(values.includes(k)){
+                    if(kanal[k]=="Løsning ikke mulig"||YouP=="Løsning ikke mulig"){
+                        YouP="Løsning ikke mulig";
+                        if (kanal[k]=="Løsning ikke mulig"){
+                            ikkem.push(k);}
+                    }
+                    else{
+                        YouP=YouP+kanal[k];
+                    }
+                    
+                    }
+                }
+            }
+            for (let st of stream){
+                for (let s of Object.keys(st)){
+                    if(values.includes(s)){
+                        if(st[s]=="Løsning ikke mulig"){
+                            if(streampris[0][s]=="Løsning ikke mulig"){
+                                YouP="Løsning ikke mulig";
+                                ikkem.push(s);
+                            }
+                            else{
+                                YouPstream+=streampris[0][s];
+                                streamlist.push(s);
+                            }
+                        }
+                        else{
+                            YouP=YouP+st[s];
+                        }
+                        
+                        }
+                    }
+                }
+    if(isNaN(YouP)){
+        return "Løsning ikke mulig pga.:<br>("+ikkem.join(", ")+")";
+    }
+    priser=[299,399,499,599];
+    if(YouPstream==0){
+        if (YouP<=10){
+            return priser[0]+" kr."+" (10 point)"+" ("+YouP+" point brugt)";
+        }
+        if (YouP<=20){
+            return priser[1]+" kr."+" (20 point)"+" ("+YouP+" point brugt)";
+        }
+        if (YouP<=30){
+            return priser[2]+" kr."+" (30 point)"+" ("+YouP+" point brugt)";
+        }
+        if (YouP<=40){
+            return priser[3]+" kr."+" (40 point)"+" ("+YouP+" point brugt)";
+        }
+        else{
+            let p=(YouP-40)*10;
+            return priser[3]+p+" kr."+ " (40+ point)"+" ("+YouP+" point brugt)"
+        }
+    }
+    else{
+        if (YouP<=10){
+            return priser[0]+YouPstream+" kr."+" (10 point)"+" ("+YouP+" point brugt)"+" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+priser[0]+" kr. (ekskl. "+streamlist.join(", ")+")";
+        }
+        if (YouP<=20){
+            return priser[1]+YouPstream+" kr."+" (20 point)"+" ("+YouP+" point brugt)"+" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+priser[1]+" kr. (ekskl. "+streamlist.join(", ")+")";
+        }
+        if (YouP<=30){
+            return priser[2]+YouPstream+" kr."+" (30 point)"+" ("+YouP+" point brugt)"+" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+priser[2]+" kr. (ekskl. "+streamlist.join(", ")+")";
+        }
+        if (YouP<=40){
+            return priser[3]+YouPstream+" kr."+" (40 point)"+" ("+YouP+" point brugt)"+" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+priser[3]+" kr. (ekskl. "+streamlist.join(", ")+")";
+        }
+        else{
+            let p=(YouP-40)*10;
+            let basepris=priser[3]+p;
+            return basepris+YouPstream+" kr."+ " (40+ point)"+" ("+YouP+" point brugt)" +" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+basepris+" kr. (ekskl. "+streamlist.join(", ")+")";
+        }
+    }
+    
+}
+
+//Allente Stream TV: Basic=0,Standard=1,Premium=2
+let AllStreamFunc=function(){
+    let ikkem=[];
+    let streamlist=[];
+
+    let kanaler=[udbyderdict["Allente Stream TV (Basic=0,Standard=1,Premium=2)"]];
+    let stream=[streamdict["Allente Stream TV (Basic=0,Standard=1,Premium=2)"]];
+    console.log(streamdict);
+    kanaler.sort();
+    stream.sort();
+
+    Object.keys(kanaler[0]).forEach(navn=>{
+        if(kanaler[0][navn]!=="Løsning ikke mulig"){
+          kanaler[0][navn]=Number(kanaler[0][navn])
+        }
+      })
+      Object.keys(stream[0]).forEach(stnavn=>{
+        if(stream[0][stnavn]!=="Løsning ikke mulig"){
+          stream[0][stnavn]=Number(stream[0][stnavn])
+        }
+      })
+
+    let streamtilvalgnavn=["Viaplay (Film og Serier)","HBOMax","Discovery+underholdning","Discovery+Sport","CMore","SkyShowtime"];
+    let streamtilvalg=[{"Viaplay (Film og Serier)":79,HBOMax:69,"Discovery+underholdning":79,"Discovery+Sport":129,CMore:99,SkyShowtime:59}];
+    let ekstrastreaming=[]
+    kanaler.sort();
+    stream.sort();
+    let AS=0;
+    let ASstream=0;
+    let streamekstra=0;
+            for (let kanal of kanaler){
+                    for (let k of Object.keys(kanal)){
+                        if(values.includes(k)){
+                            if(kanal[k]=="Løsning ikke mulig"||AS=="Løsning ikke mulig"){
+                                AS="Løsning ikke mulig";
+                                if (kanal[k]=="Løsning ikke mulig"){
+                                    ikkem.push(k);}
+                            }
+                            if(AS<kanal[k]){
+                                AS=kanal[k];
+                            }
+                        }
+                    }
+                }
+                for (let st of stream){
+                    for (let s of Object.keys(st)){
+                        if(values.includes(s)){
+                            if(st[s]=="Løsning ikke mulig"||AS=="Løsning ikke mulig"){
+                                if(streamtilvalgnavn.includes(s)){
+                                    streamekstra=streamekstra+streamtilvalg[0][s];
+                                    ekstrastreaming.push(s);
+                                }
+                                else{
+                                    if (st[s]=="Løsning ikke mulig"){
+                                        if(streampris[0][s]=="Løsning ikke mulig"){
+                                            AS="Løsning ikke mulig";
+                                            ikkem.push(s);
+                                        }
+                                        else{
+                                            ASstream+=streampris[0][s];
+                                            streamlist.push(s);
+                                        }
+                                    }
+                                }
+                            }
+                            if(AS<st[s]){
+                                AS=st[s];
+                            }
+                        }
+                    }
+                }
+        let ekstratekst=""
+        if(!ekstrastreaming.length==0){
+            ekstratekst="(inkl. tilvalgspakke: "+ekstrastreaming.join(", ")+")";
+        }
+
+        pakkepris=[429,549,659]
+        pakke=[" (Basic pakke)"," (Standard pakke)", " (Premium pakke)"]
+        if(AS=="Løsning ikke mulig"){
+            return "Løsning ikke mulig pga.:<br>("+ikkem.join(", ")+")";
+        }
+        else{
+            if(ASstream==0){
+                let prisAll=pakkepris[AS]+streamekstra;
+                return prisAll+" kr." +pakke[AS]+ekstratekst;
+            }
+            else{
+                let prisAll=pakkepris[AS]+streamekstra;
+                return prisAll+ASstream+" kr."+pakke[AS]+" "+ekstratekst+" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+prisAll+" kr."+" (ekskl. "+streamlist.join(", ")+")"
+            }
+    }
+}
+
+//Allente Parabol TV
+let AllParaFunc=function(){
+    let ikkem=[];
+    let streamlist=[];
+    let kanaler=[udbyderdict["Allente Parabol TV (Basic=0,Standard=1,Premium=2)"]];
+    let stream=[streamdict["Allente Parabol TV (Basic=0,Standard=1,Premium=2)"]];
+    console.log(streamdict);
+    kanaler.sort();
+    stream.sort();
+
+    Object.keys(kanaler[0]).forEach(navn=>{
+        if(kanaler[0][navn]!=="Løsning ikke mulig"){
+          kanaler[0][navn]=Number(kanaler[0][navn])
+        }
+      })
+      Object.keys(stream[0]).forEach(stnavn=>{
+        if(stream[0][stnavn]!=="Løsning ikke mulig"){
+          stream[0][stnavn]=Number(stream[0][stnavn])
+        }
+      })
+
+    let streamtilvalgnavn=["Viaplay (Film og Serier)","HBOMax","Discovery+underholdning","Discovery+Sport","CMore","SkyShowtime"];
+    let streamtilvalg=[{"Viaplay (Film og Serier)":79,HBOMax:69,"Discovery+underholdning":79,"Discovery+Sport":129,CMore:99,SkyShowtime:59}];
+    let ekstrastreaming=[];
+    let AP=0;
+    let APstream=0;
+    let streamekstra=0;
+            for (let kanal of kanaler){
+                    for (let k of Object.keys(kanal)){
+                        if(values.includes(k)){
+                            if(kanal[k]=="Løsning ikke mulig"||AP=="Løsning ikke mulig"){
+                                AP="Løsning ikke mulig";
+                                if (kanal[k]=="Løsning ikke mulig"){
+                                    ikkem.push(k);}
+                            }
+                            if(AP<kanal[k]){
+                                AP=kanal[k];
+                            }
+                        }
+                    }
+                }
+                for (let st of stream){
+                    for (let s of Object.keys(st)){
+                        if(values.includes(s)){
+                            if(st[s]=="Løsning ikke mulig"||AP=="Løsning ikke mulig"){
+                                if(streamtilvalgnavn.includes(s)){
+                                    streamekstra=streamekstra+streamtilvalg[0][s];
+                                    ekstrastreaming.push(s);
+                                }
+                                else{
+                                    if (st[s]=="Løsning ikke mulig"){
+                                        if(streampris[0][s]=="Løsning ikke mulig"){
+                                            AP="Løsning ikke mulig";
+                                            ikkem.push(s);
+                                        }
+                                        else{
+                                            APstream+=streampris[0][s];
+                                            streamlist.push(s);
+                                        }
+                                    }
+                                }
+                            }
+                            if(AP<st[s]){
+                                AP=st[s];
+                            }
+                        }
+                    }
+                }
+        let ekstratekst=""
+        if(!ekstrastreaming.length==0){
+            ekstratekst="(inkl. tilvalgspakke: "+ekstrastreaming.join(", ")+")";
+        }
+
+        pakkepris=[469,589,709];
+        pakke=[" (Basic pakke)"," (Standard pakke)", " (Premium pakke)"];
+        if(AP=="Løsning ikke mulig"){
+            return "Løsning ikke mulig pga.:<br>("+ikkem.join(", ")+")";
+        }
+        else{
+            if(APstream==0){
+                let prisAll=pakkepris[AP]+streamekstra;
+                return prisAll+" kr." +pakke[AP]+ekstratekst;
+            }
+            else{
+                let prisAll=pakkepris[AP]+streamekstra;
+                return prisAll+APstream+" kr."+pakke[AP]+" "+ekstratekst+" (inkl. tilkøb af "+streamlist.join(", ")+")"+"<br>"+prisAll+" kr."+" (ekskl. "+streamlist.join(", ")+")"
+            }
+    }
+}
+
+
 let values = [];
 let pris=[];
 
@@ -966,11 +1412,16 @@ const btn = document.querySelector('#btn');
             let NVF=NVFfunc();
             let NVO=NVOfunc();
             let NVA=NVAfunc();
+            let SPL=SPLfunc();
+            let SVS=SVSfunc();
+            let YouP=YouPfunc();
+            let AS=AllStreamFunc();
+            let AP=AllParaFunc();
 
 
             let minpris=Number.MAX_VALUE;
             let expr="([0-9]+) .*"
-            Udbyderliste=[{name:"NVF",val:NVF},{name:"NVO",val:NVO},{name:"NVA",val:NVA}];
+            Udbyderliste=[{name:"NVF",val:NVF},{name:"NVO",val:NVO},{name:"NVA",val:NVA},{name:"SPL",val:SPL},{name:"SVS",val:SVS},{YouP:"YouP",val:YouP},{name:"AS",val:AS},{name:"AP",val:AP}];
             for (let u of Udbyderliste){
                 val=u.val.replace(expr,"");
                 val=parseInt(val);
@@ -991,6 +1442,21 @@ const btn = document.querySelector('#btn');
                     if (u.name=="NVA"){
                         NVA="<span class=cheap>"+NVA+"</span>";
                     }
+                    if (u.name=="SPL"){
+                        SPL="<span class=cheap>"+SPL+"</span>"
+                    }
+                    if (u.name=="SVS"){
+                        SVS="<span class=cheap>"+SVS+"</span>"
+                    }
+                    if (u.name=="YouP"){
+                        YouP="<span class=cheap>"+YouP+"</span>"
+                    }
+                    if (u.name=="AS"){
+                        AS="<span class=cheap>"+AS+"</span>";
+                    }
+                    if (u.name=="AP"){
+                        AP="<span class=cheap>"+AP+"</span>";
+                    }
                 }
             }
             pris.push("Norlys Vælg Frit: ".bold()+NVF);
@@ -999,6 +1465,15 @@ const btn = document.querySelector('#btn');
             pris.push("<br>");
             pris.push("<br>"+"Norlys Vælg Alt: ".bold()+NVA);
             pris.push("<br>");
+            pris.push("<br>"+"Stofa pakkeløsning: ".bold()+SPL);
+            pris.push("<br>");
+            pris.push("<br>"+"Stofa Vælg Selv: ".bold()+SVS);
+            pris.push("<br>");
+            pris.push("<br>"+"Yousee Play: ".bold()+YouP);
+            pris.push("<br>");
+            pris.push("<br>"+"Allente Streaming: ".bold()+AS);
+            pris.push("<br>");
+            pris.push("<br>"+"Allente Parabol: ".bold()+AP);
             if (values.length==0){
                 swal.fire("Ingen kanaler valgt");
             }
